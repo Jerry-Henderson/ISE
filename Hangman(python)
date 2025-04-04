@@ -1,0 +1,73 @@
+import random
+from HangmanWords import words_list #ai generated list of 200 words
+from HangmanWords import draw_hangman #ai generated hangman stages
+
+def word_selection():
+    word = (random.choice(words_list)).upper()
+    return word
+
+
+def game(word):
+    progress = "_" * len(word)
+    correct = False
+    guessed_letters = []
+    guessed_words = []
+    attempts = 0
+    print("Its time to play Hangman!!!")
+    print(draw_hangman(attempts))
+    print(progress)
+    while not correct and attempts < 6 :
+        guess = input("Please choose a letter or word: ").upper()
+        if len(guess) == 1:
+            if guess in guessed_letters:
+                print("You have already guessed that letter," ,guess)
+            elif guess in word:
+                print(f"Congrats {guess} is in the word")
+                guessed_letters.append(guess)
+                word_as_list = list(progress)
+                indicies = [i for i, letter in enumerate(word) if letter == guess]
+                for index in indicies:
+                    word_as_list[index] = guess
+                progress = "".join(word_as_list)
+                if "_" not in progress:
+                    correct = True
+
+            elif guess not in word:
+                print(f"{guess} is not in the word")
+                guessed_letters.append(guess)
+                attempts += 1
+        elif len(guess) == len(word):
+            if guess in guessed_words:
+                print("You have already guessed that word" ,guess)
+            elif guess == word:
+                guessed_letters.append(guess)
+                correct = True
+                progress = word
+            elif guess != word:
+                print(f"{guess} is in the word")
+                guessed_letters.append(guess)
+                attempts += 1
+
+        else:
+            print("Please enter a valid guess")
+        print(draw_hangman(attempts))
+        print(progress)
+        print("\n")
+    if correct:
+        print("Congrats you guessed the word")
+    if not correct:
+        print(f"Game Over. you ran out of tries, the word was {word}")
+
+
+def play():
+    word = word_selection()
+    game(word)
+    aris = input("Play again? (Y/N): ").upper()
+    if aris == "Y":
+        word = word_selection()
+        game(word)
+    elif aris == "N":
+        exit()
+
+
+play()
