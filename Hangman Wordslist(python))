@@ -1,0 +1,98 @@
+words_list = [
+    "Adventure", "Apple", "Breeze", "Cupcake", "Diamond", "Echo", "Freedom", "Garden", "Horizon", "Island",
+    "Journey", "Kite", "Laughter", "Mountain", "Night", "Ocean", "Piano", "Quest", "Rainbow", "Sunset", "Treasure",
+    "Universe", "Waterfall", "Xylophone", "Youth", "Zipper", "Ambition", "Balance", "Cloud", "Dream", "Energy",
+    "Forest", "Glow", "Heart", "Ignite", "Jump", "Knowledge", "Light", "Moon", "Nest", "Oasis", "Path", "Quiet",
+    "Rose", "Star", "Twilight", "Unity", "Victory", "Wonder", "Xenon", "Ancient", "Brilliant", "Crystal", "Delight",
+    "Eclipse", "Fable", "Galactic", "Harmony", "Illusion", "Joy", "Kindness", "Lagoon", "Marvel", "Nightfall",
+    "Overcome", "Peace", "Quiver", "Radiance", "Symphony", "Tranquil", "Unfold", "Velvet", "Whistle", "Zenith",
+    "Acorn", "Breeze", "Colorful", "Dreamer", "Elevate", "Faith", "Glimmer", "Hope", "Influence", "Jigsaw", "Kite",
+    "Luminary", "Maze", "Nostalgia", "Opal", "Pineapple", "Quartz", "Ripple", "Spark", "Twilight", "Uplift", "Vision",
+    "Willow", "Xenial", "Youthful", "Zeal", "Adventure", "Bliss", "Canyon", "Drift", "Embrace", "Fierce", "Gaze",
+    "Horizon", "Infinite", "Journey", "Keep", "Leap", "Mellow", "Nurture", "Oasis", "Pursuit", "Quest", "Rapture",
+    "Serenity", "Thrill", "Unravel", "Vast", "Wavelength", "Explore", "Comfort", "Wonder", "Experience", "Yonder",
+    "Arcane", "Blossom", "Cascade", "Driftwood", "Ember", "Flare", "Gracious", "Halo", "Infinity", "Jewel", "Keen",
+    "Love", "Momentum", "Novel", "Oasis", "Pathway", "Quest", "Radiant", "Starlight", "Tranquility", "Unveil", "Vital",
+    "Wanderlust", "Express", "Yield", "Zealot", "Altruism", "Beacon", "Cloudburst", "Desire", "Ember", "Flare", "Gather",
+    "Haze", "Innocence", "Joyful", "Kindred", "Legacy", "Marvelous", "Nature", "Opus", "Paradise", "Quench", "Reverence",
+    "Shimmer", "Thrive", "Unbroken", "Visionary", "Whisper", "Xenon", "Yawn", "Zeal", "Artistry", "Blissful", "Creativity",
+    "Dazzle", "Envision", "Flourish", "Grace", "Hopeful", "Inspire", "Jubilant", "Keen-eyed", "Luminous", "Magnificent",
+    "Nexus", "Overflow", "Peaceful", "Radiance", "Stellar", "Tranquil"
+    ]
+
+
+def draw_hangman(stage):
+    stages = [
+        """
+         ------
+         |    |
+              |
+              |
+              |
+              |
+              |
+        ---------
+        """,
+        """
+         ------
+         |    |
+         O    |
+              |
+              |
+              |
+              |
+        ---------
+        """,
+        """
+         ------
+         |    |
+         O    |
+         |    |
+              |
+              |
+              |
+        ---------
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|    |
+              |
+              |
+              |
+        ---------
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|\   |
+              |
+              |
+              |
+        ---------
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|\   |
+        /     |
+              |
+              |
+        ---------
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|\   |
+        / \   |
+              |
+              |
+        ---------
+        """
+    ]
+
+    print(stages[stage])
