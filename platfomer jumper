@@ -1,0 +1,171 @@
+import pygame 
+from sys import exit
+import random
+
+pygame.init()
+
+screen = pygame.display.set_mode((800,400)) #the screen
+clock = pygame.time.Clock()
+
+player_image = pygame.image.load('OneDrive - KCETB/platformer2D/Pixel Adventure 1/Free/Main Characters/Mask Dude/Run (32x32).png')
+background_image = pygame.image.load('OneDrive - KCETB/platformer2D/Pixel Adventure 1/Free/Background/Blue.png')
+ground_image = pygame.image.load('OneDrive - KCETB/platformer2D/Pixel Adventure 1/Free/Terrain/Terrain (16x16).png')
+
+BG = (50,50,50)
+black = (0,0,0)
+
+
+def get_image(sheet,frame,width,height,scale):
+    image = pygame.Surface((width,height),pygame.SRCALPHA)
+    image.blit(sheet,(0,0),((frame * width),0,width,height))
+    image = pygame.transform.scale(image, (width * scale, height * scale))
+    
+
+    return image
+
+
+
+player_surface = get_image(player_image,0,32,32,3)
+player_rectangle = player_surface.get_rect(bottomleft = (0,320))
+player_jump = get_image(player_image,7,32,32,3)
+
+background_surface = get_image(background_image,0,64,64,13)
+
+ground_surface = get_image(ground_image,0,48,50,2)
+
+position2 = random.randint(100,300)
+position3 = random.randint(400,599)
+position4 = random.randint(600,800)
+
+ground_rectangle1 = ground_surface.get_rect(topleft = (0,310))
+ground_rectangle2 = ground_surface.get_rect(topleft = (position2,310))
+ground_rectangle3 = ground_surface.get_rect(topleft = (position3,310))
+ground_rectangle4 = ground_surface.get_rect(topleft = (position4,310))
+
+
+
+test_font = pygame.font.Font("OneDrive - KCETB/ISE portfolio/Platformer game/font/Pixeltype.ttf",50)
+
+progress = 1
+level = 1
+score = 0
+gravity = 0
+
+def display_score():
+    score_surface = test_font.render(f'{score}',False,(64,64,64))
+    score_rectangle = score_surface.get_rect(center = (400,100))
+    screen.blit(score_surface,score_rectangle)
+
+def display_round():
+    level_surface = test_font.render(f'    LEVEL: {level}',False,(64,64,64))
+    level_rectangle = level_surface.get_rect(topleft = (0,50))
+    screen.blit(level_surface,level_rectangle)
+
+
+
+
+while True:
+    gravity += 1
+    player_rectangle.y += gravity
+
+    if level == progress:
+        position2 = random.randint(200,250)
+        position3 = random.randint(400,550)
+        position4 = random.randint(600,800)
+
+        ground_rectangle1 = ground_surface.get_rect(topleft = (0,310))
+        ground_rectangle2 = ground_surface.get_rect(topright = (position2,310))
+        ground_rectangle3 = ground_surface.get_rect(topright = (position3,310))
+        ground_rectangle4 = ground_surface.get_rect(topright = (position4,310))
+
+        on_block1 = True
+        on_block2 = True
+        on_block3 = True
+        on_block4 = True
+
+        progress += 1
+    
+    
+
+    
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+                    if player_rectangle.bottom > 320:
+                        gravity = -20
+                        screen.blit(player_jump,player_rectangle)
+         
+    keys = pygame.key.get_pressed()  
+    if keys[pygame.K_RIGHT]:
+        player_rectangle.right += 5
+
+    if keys[pygame.K_LEFT]:
+        player_rectangle.left -= 5
+    
+    
+   
+                
+                       
+            
+    
+    screen.blit(background_surface,(0,0))
+    screen.blit(ground_surface,ground_rectangle2)
+    screen.blit(ground_surface,ground_rectangle1)
+    screen.blit(ground_surface,ground_rectangle3)
+    screen.blit(ground_surface,ground_rectangle4)
+
+
+    if player_rectangle.colliderect(ground_rectangle1.inflate(-40,0)):
+        if  player_rectangle.bottom >= 320:
+                    player_rectangle.bottom = 320  
+        if on_block1:
+                score += 1
+                on_block1 = False     
+    elif player_rectangle.colliderect(ground_rectangle2.inflate(-40,0)):
+            if player_rectangle.bottom >= 320:
+                player_rectangle.bottom = 320
+            if on_block2:
+                score += 1
+                on_block2 = False 
+    elif player_rectangle.colliderect(ground_rectangle3.inflate(-40,0)):
+        if player_rectangle.bottom >= 320:
+                player_rectangle.bottom = 320
+        if on_block3:
+                score += 1
+                on_block3 = False        
+    elif player_rectangle.colliderect(ground_rectangle4.inflate(-40,0)):
+        if player_rectangle.bottom >= 320:
+                player_rectangle.bottom = 320
+        if on_block4:
+                score += 1
+                on_block4 = False 
+                
+    
+
+    display_score()
+    display_round()
+
+        
+        
+        
+
+    if player_rectangle.right >= 800:
+        player_rectangle.left = 0
+        level += 1
+        
+        
+    screen.blit(player_surface,player_rectangle)
+            
+
+    if player_rectangle.top >= 400:
+        exit()
+
+    
+    
+    
+    pygame.display.update()
+    clock.tick(60)
