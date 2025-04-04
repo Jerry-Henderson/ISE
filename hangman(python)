@@ -1,0 +1,9 @@
+weight = int(input("Weight: "))
+unit = input("(K)g or (L)bs: ").lower()
+converted_weight = 0
+if unit == "l":
+    converted_weight = weight / 0.453592
+    print("Weight in kg: " + str(converted_weight))
+elif unit == "k":
+    converted_weight = weight * 2.20462
+    print("Weight in lbs: " + str(converted_weight))
