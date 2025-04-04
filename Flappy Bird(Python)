@@ -1,0 +1,155 @@
+import pygame 
+from sys import exit
+import random 
+
+
+
+
+pygame.init()
+clock = pygame.time.Clock()
+
+game_running = False  
+home_screen = True
+
+screen = pygame.display.set_mode((570,400)) #the screen
+
+background_surface = pygame.image.load('OneDrive - KCETB/flappy bird/graphics/background-day.png').convert() #get backgorund
+
+player_surface =  pygame.image.load('OneDrive - KCETB/flappy bird/graphics/yellowbird-midflap.png').convert() 
+player_surface_rect = player_surface.get_rect(center = (100,200)) #making bird 
+player_surface_endscreen = pygame.transform.scale(player_surface,(100,100))
+
+pipe1_surface = pygame.image.load('OneDrive - KCETB/flappy bird/graphics/pipe-green.png').convert()
+pipe1_surface_scaled = pygame.transform.scale(pipe1_surface,(50,150))
+pipe1_surface_flipped =  pygame.transform.rotate(pipe1_surface_scaled, 180)
+pipe1_surface_rect = pipe1_surface_flipped.get_rect(topright = (570,0)) #making pipe and shaping it to right size
+
+
+pipe2_surface = pygame.image.load('OneDrive - KCETB/flappy bird/graphics/pipe-red.png').convert()
+pipe2_surface_scaled = pygame.transform.scale(pipe2_surface,(50,150))
+pipe2_surface_flipped =  pygame.transform.rotate(pipe2_surface_scaled, -360)
+pipe2_surface_rect = pipe2_surface_flipped.get_rect(bottomright = (800,400))
+
+
+
+
+test_font = pygame.font.Font("OneDrive - KCETB/ISE portfolio/Platformer game/font/Pixeltype.ttf",50)
+initial_text = test_font.render("Press Spacebar to start :)",False,("Black"))
+initial_text_rect = initial_text.get_rect(center = (285,300))
+
+def display_score():
+    time = int((pygame.time.get_ticks() - start_time) / 1000)
+    score_surface = test_font.render(f' {time}',False,(64,64,64))
+    score_rectangle = score_surface.get_rect(center = (285,100))
+    screen.blit(score_surface,score_rectangle)
+
+
+def game_over():
+    screen.blit(background_surface,(0,0))
+    screen.blit(background_surface,(285,0))
+    screen.blit(test_font.render("GAME OVER",False,("Black")),(200,50))
+    screen.blit(test_font.render("Press Spacebar To Play Again :)",False,("Black")),(60,350))
+    screen.blit(player_surface_endscreen,(250,200))
+    if event.type == pygame.KEYDOWN:  
+            if event.key == pygame.K_SPACE:
+                home_screen = True
+                game_running = False
+    
+    
+
+
+
+
+start_time = 0 
+gravity = 0
+
+
+  
+
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        
+        if event.type == pygame.KEYDOWN:  
+            if event.key == pygame.K_SPACE:
+                gravity = -10
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            gravity = -10
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP :
+                gravity = -10 
+        
+ 
+    
+    
+        if home_screen: 
+            screen.blit(background_surface,(0,0))
+            screen.blit(background_surface,(285,0))
+            screen.blit(player_surface,player_surface_rect)
+            screen.blit(initial_text,initial_text_rect)
+            if event.type == pygame.KEYDOWN:  
+                if event.key == pygame.K_SPACE:
+                    game_running = True
+                    home_screen  = False
+
+
+        
+    if game_running:
+
+        
+
+        screen.blit(background_surface,(0,0))
+        screen.blit(background_surface,(285,0))
+        screen.blit(player_surface,player_surface_rect)
+        display_score()
+            
+
+                
+
+        
+
+        pipe1_surface_rect.left -= 7                                 
+        if pipe1_surface_rect.right <= 0:
+            random_position1 = random.randint(570,1000)
+            pipe1_surface_rect.left = random_position1
+        screen.blit(pipe1_surface_flipped,pipe1_surface_rect)
+      
+        
+
+        pipe2_surface_rect.left -= 7                                 
+        if pipe2_surface_rect.right <= 0: 
+            random_position2 = random.randint(570,1000)
+            pipe2_surface_rect.left = random_position2
+        screen.blit(pipe2_surface_flipped,pipe2_surface_rect)
+       
+
+        if player_surface_rect.bottom <= 0 or player_surface_rect.top >= 400:
+            exit()
+
+        if player_surface_rect.colliderect(pipe1_surface_rect):
+            exit()
+                        
+        if player_surface_rect.colliderect(pipe2_surface_rect):
+            exit()
+        
+
+
+            
+    
+        
+
+
+        gravity += .5
+        player_surface_rect.y += gravity
+
+
+
+
+
+        
+    pygame.display.update()
+    clock.tick(60)
