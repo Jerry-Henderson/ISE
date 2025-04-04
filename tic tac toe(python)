@@ -1,0 +1,31 @@
+import os
+places = {1: '1', 2: '2', 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8", 9: "9"}
+round = 1
+game_history = []
+def drawboard(places):
+    board = (f"|{places[1]}|{places[2]}|{places[3]}|\n"
+            f"|{places[4]}|{places[5]}|{places[6]}|\n"
+            f"|{places[7]}|{places[8]}|{places[9]}|\n"
+            )
+    print(board)
+
+
+game_status = "playing"
+drawboard(places)
+while round <= 9:
+    move = int(input("Player X what is your move: "))
+    if move in game_history:
+        print("That spot has already been selected")
+        move = int(input("please select another move: "))
+    places[move] = "X"
+    drawboard(places)
+    game_history.append(move)
+    round += 1
+
+    move = int(input("Player Y what is your move: "))
+    if move in game_history:
+        print("That spot has already been selected")
+        move = int(input("please select another move: "))
+    places[move] = "O"
+    drawboard(places)
+    game_history.append(move)
